@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculator</title>
+<style>
+    .header-div {
+        width: 300px;
+        margin: 0 auto;
+    }
+    header {
+        max-width: 300px; /* Updated width */
+        text-align: center;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 30px; /* Updated font size */
+    }
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .calculator {
+        width: 400px;
+        height: 400px;
+        margin: 0 auto;
+        padding: 100px;
+        margin-top: 5%;
+        border: 2px solid #000000;
+        border-radius: 300px;
+        background-image: linear-gradient(0deg, red,orange,yellow,green,blue,indigo,violet);
+    }
+    input[type="text"] {
+        width: 92%;
+        margin-bottom: 10px;
+        padding: 10px;
+        font-size: 16px;
+    }
+    input[type="button"] {
+        width: 48%;
+        padding: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        margin: 0 auto;
+    }
+    input[type="button"]:hover {
+        background-color: #ccc;
+        
+    }
+    .clear-button-container {
+        text-align: center;
+        margin-top: 20px;
+    }
+    .row {
+        display: flex;
+        justify-content: space-between;
+    }
+    @keyframes rotate{
+        to{ transform: rotate(360deg); }
+    }
+    .calculate-button-container {
+        text-align: center;
+        width: 300px;
+        margin: 0 auto;
+        margin-top: 70px;
+    }
+    
+</style>
+</head>
+<body>
+
+<div class="calculator">
+    <div class="header-div">
+        <header>
+            <p class="header-txt">Calculator</p>
+        </header>
+    </div>
+    <input type="text" id="result" readonly>
+    <div class="row">
+        <input type="button" value="1" onclick="appendToResult('1')">
+        <input type="button" value="2" onclick="appendToResult('2')">
+        <input type="button" value="3" onclick="appendToResult('3')">
+    </div>
+    <div class="row">
+        <input type="button" value="4" onclick="appendToResult('4')">
+        <input type="button" value="5" onclick="appendToResult('5')">
+        <input type="button" value="6" onclick="appendToResult('6')">
+    </div>
+    <div class="row">
+        <input type="button" value="7" onclick="appendToResult('7')">
+        <input type="button" value="8" onclick="appendToResult('8')">
+        <input type="button" value="9" onclick="appendToResult('9')">
+    </div>
+    <div class="row">
+        <input type="button" value="0" onclick="appendToResult('0')">
+        <input type="button" value="+" onclick="appendToResult('+')">
+        <input type="button" value="-" onclick="appendToResult('-')">
+    </div>
+    <div class="row">
+        <input type="button" value="*" onclick="appendToResult('*')">
+        <input type="button" value="/" onclick="appendToResult('/')">
+        <input type="button" value="." onclick="appendToResult('.')">
+    </div>
+    <div class="clear-button-container">
+        <input type="button" value="Clear" onclick="clearResult()">
+    </div>
+</div>
+<div class="calculate-button-container">
+    <input type="button" value="Calculate" onclick="calculate()">
+</div>
+
+<script>
+    let rotSpeed = 50; // Rotational speed should be a number
+    let angle = 0; // Initialize angle as a number
+    let angleChange = 1;
+
+    let intervalId; // Variable to hold interval ID
+
+    function appendToResult(value) {
+        document.getElementById('result').value += value;
+    }
+
+    function clearResult() {
+        document.getElementById('result').value = '';
+    }
+
+    function changeAngle() {
+        angle = angle + angleChange;
+        angleChange = 1.5 * (50 / rotSpeed);
+        let container = document.querySelector('.calculator');
+        container.setAttribute("style", `background-image: linear-gradient(${angle}deg, red,orange,yellow,green,blue,indigo,violet)`);
+    }
+
+    function calculate() {
+        let result = document.getElementById('result').value;
+        try {
+            document.getElementById('result').value = eval(result);
+            let container = document.querySelector('.calculator');
+            if (intervalId) clearInterval(intervalId);
+            intervalId = setInterval(changeAngle, rotSpeed);
+            rotSpeed = rotSpeed * 0.8;
+        } catch (error) {
+            document.getElementById('result').value = 'Error';
+        }
+    }
+</script>
+
+</body>
+</html>
