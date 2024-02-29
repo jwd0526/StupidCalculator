@@ -17,7 +17,6 @@
     }
     body {
         font-family: Arial, sans-serif;
-        background-image: linear-gradient(0deg, red,orange,yellow,green,blue,indigo,violet);
         height: 92vh;
     }
     .calculator {
@@ -110,6 +109,16 @@
 </div>
 
 <script>
+    window.onload = function() {
+        let w = setInterval(getColor, 17);
+    };
+
+    function getColor() {
+        let col = Math.floor(Math.random() * (361));
+        let cont = document.querySelector('body');
+        cont.setAttribute("style", `background-color:hsl(${col},100%,50%`);
+    }
+
     let rotSpeed = 50; // Rotational speed should be a number
     let angle = 0; // Initialize angle as a number
     let angleChange = 1;
